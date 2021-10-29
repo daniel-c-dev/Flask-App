@@ -17,22 +17,26 @@ class Todo(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.id
 
+# TEMP: Test connection
+@app.route('/', methods=['GET', 'POST'])
+def handle_request():
+    return "Successful Connection"
 
-@app.route('/', methods=['POST', 'GET'])
-def index():
-    if request.method == 'POST':
-        task_content = request.form['content']
-        new_task = Todo(content=task_content)
+#@app.route('/', methods=['POST', 'GET'])
+#def index():
+#    if request.method == 'POST':
+#        task_content = request.form['content']
+#        new_task = Todo(content=task_content)
 
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an issue adding your task'
-    else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasks=tasks)
+#        try:
+#            db.session.add(new_task)
+#            db.session.commit()
+#            return redirect('/')
+#        except:
+#            return 'There was an issue adding your task'
+#    else:
+#        tasks = Todo.query.order_by(Todo.date_created).all()
+#        return render_template('index.html', tasks=tasks)
 
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -61,4 +65,4 @@ def update(id):
         return render_template('update.html', task=task)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(host="0.0.0.0", port=5000, debug = True)
