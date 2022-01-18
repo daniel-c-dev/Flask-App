@@ -40,11 +40,3 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-
-def create_app():
-    app = ...
-
-    from . import db
-    db.init_app(app)
-
-    return app
